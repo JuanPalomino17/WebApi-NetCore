@@ -1,0 +1,149 @@
+Documentación de la API
+1. Descripción General
+Esta API permite gestionar un registro de vehículos y proporciona servicios de autenticación
+para registrar y iniciar sesión con usuarios. Los usuarios registrados pueden realizar 
+operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la tabla de vehículos.
+
+2. Endpoints
+1. Registro de Usuarios
+
+URL: /api/auth/register
+Método: POST
+Descripción: Permite registrar un nuevo usuario.
+Cuerpo de la solicitud:
+json
+{
+  "email": "example@example.com",
+  "password": "Password!123"
+}
+Respuestas:
+200 OK: Registro exitoso.
+400 Bad Request: Error en la validación del correo o la contraseña.
+409 Conflict: El correo electrónico ya está registrado.
+2. Inicio de Sesión
+
+URL: /api/auth/login
+Método: POST
+Descripción: Permite a un usuario registrado iniciar sesión.
+Cuerpo de la solicitud:
+json
+{
+  "email": "example@example.com",
+  "password": "Password!123"
+}
+Respuestas:
+200 OK: Inicio de sesión exitoso. Incluye token JWT.
+400 Bad Request: Error en la validación del correo o la contraseña.
+401 Unauthorized: Credenciales incorrectas.
+3. Operaciones CRUD de Vehículos
+
+URL: /api/vehicles
+
+Método: GET
+
+Descripción: Obtiene todos los vehículos registrados.
+
+Respuestas:
+
+200 OK: Lista de vehículos.
+URL: /api/vehicles/{id}
+
+Método: GET
+
+Descripción: Obtiene un vehículo por su ID.
+
+Respuestas:
+
+200 OK: Información del vehículo.
+404 Not Found: Vehículo no encontrado.
+URL: /api/vehicles
+
+Método: POST
+
+Descripción: Crea un nuevo vehículo.
+
+Cuerpo de la solicitud:
+json
+{
+  "make": "Toyota",
+  "model": "Corolla",
+  "year": 2021,
+  "licensePlate": "ABC123"
+}
+Respuestas:
+
+201 Created: Vehículo creado.
+400 Bad Request: Error en la validación de los datos.
+URL: /api/vehicles/{id}
+
+Método: PUT
+
+Descripción: Actualiza la información de un vehículo.
+
+Cuerpo de la solicitud:   
+json
+{
+  "make": "Toyota",
+  "model": "Corolla",
+  "year": 2021,
+  "licensePlate": "ABC123"
+}
+Respuestas:
+
+200 OK: Vehículo actualizado.
+400 Bad Request: Error en la validación de los datos.
+404 Not Found: Vehículo no encontrado.
+URL: /api/vehicles/{id}
+
+Método: DELETE
+
+Descripción: Elimina un vehículo por su ID.
+
+Respuestas:
+
+204 No Content: Vehículo eliminado.
+404 Not Found: Vehículo no encontrado.
+3. Ejemplo de Solicitud y Respuesta
+Registro de Usuarios
+
+Solicitud:
+http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+  "password": "Password!123"
+}
+Respuesta:
+http 200 OK
+Inicio de Sesión
+
+Solicitud:
+http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+  "password": "Password!123"
+}
+Respuesta: http 200 OK
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+Creación de Vehículo
+
+Solicitud:
+http
+POST /api/vehicles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "make": "Toyota",
+  "model": "Corolla",
+  "year": 2021,
+  "licensePlate": "ABC123"
+}
+Respuesta: http 201 Created
